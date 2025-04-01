@@ -1,5 +1,5 @@
 
-
+set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 
 set_property PACKAGE_PIN BK10     [get_ports "SYSCLK2_clk_p"] ;# Bank  68 VCCO - VCC1V8   - IO_L11P_T1U_N8_GC_68
 set_property IOSTANDARD  LVDS 	  [get_ports "SYSCLK2_clk_p"] ;# Bank  68 VCCO - VCC1V8   - IO_L11P_T1U_N8_GC_68

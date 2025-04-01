@@ -16,12 +16,12 @@
         "clock_buffer": ""
       },
       "smartconnect": "",
-      "axil_slave": "",
       "blinky": {
         "clock_buffer": "",
         "blinky": ""
       },
-      "gnd": ""
+      "gnd": "",
+      "axil_slave": ""
     },
     "interface_ports": {
       "SYSCLK2": {
@@ -104,7 +104,7 @@
           }
         },
         "ports": {
-          "PCIE_PERST_LS_65": {
+          "PCIE_PERST": {
             "type": "rst",
             "direction": "I"
           },
@@ -260,7 +260,7 @@
         "nets": {
           "sys_rst_n_0_1": {
             "ports": [
-              "PCIE_PERST_LS_65",
+              "PCIE_PERST",
               "pcie_bridge_0/sys_rst_n"
             ]
           },
@@ -341,6 +341,91 @@
                 "value": "0"
               }
             }
+          }
+        }
+      },
+      "blinky": {
+        "interface_ports": {
+          "SYSCLK2": {
+            "mode": "Slave",
+            "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
+            "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0"
+          }
+        },
+        "ports": {
+          "QSFP28_0_ACTIVITY_LED": {
+            "direction": "O"
+          }
+        },
+        "components": {
+          "clock_buffer": {
+            "vlnv": "xilinx.com:ip:util_ds_buf:2.2",
+            "xci_name": "top_level_util_ds_buf_1_0",
+            "xci_path": "ip/top_level_util_ds_buf_1_0/top_level_util_ds_buf_1_0.xci",
+            "inst_hier_path": "blinky/clock_buffer"
+          },
+          "blinky": {
+            "vlnv": "xilinx.com:module_ref:blinky:1.0",
+            "xci_name": "top_level_blinky_0_0",
+            "xci_path": "ip/top_level_blinky_0_0/top_level_blinky_0_0.xci",
+            "inst_hier_path": "blinky/blinky",
+            "reference_info": {
+              "ref_type": "hdl",
+              "ref_name": "blinky",
+              "boundary_crc": "0x0"
+            },
+            "ports": {
+              "clk": {
+                "type": "clk",
+                "direction": "I",
+                "parameters": {
+                  "FREQ_HZ": {
+                    "value": "100000000",
+                    "value_src": "ip_prop"
+                  },
+                  "CLK_DOMAIN": {
+                    "value": "top_level_util_ds_buf_1_0_IBUF_OUT",
+                    "value_src": "default_prop"
+                  }
+                }
+              },
+              "led": {
+                "direction": "O"
+              }
+            }
+          }
+        },
+        "interface_nets": {
+          "SYSCLK2_1": {
+            "interface_ports": [
+              "SYSCLK2",
+              "clock_buffer/CLK_IN_D"
+            ]
+          }
+        },
+        "nets": {
+          "blinky_led": {
+            "ports": [
+              "blinky/led",
+              "QSFP28_0_ACTIVITY_LED"
+            ]
+          },
+          "util_ds_buf_1_IBUF_OUT": {
+            "ports": [
+              "clock_buffer/IBUF_OUT",
+              "blinky/clk"
+            ]
+          }
+        }
+      },
+      "gnd": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "xci_name": "top_level_xlconstant_0_0",
+        "xci_path": "ip/top_level_xlconstant_0_0/top_level_xlconstant_0_0.xci",
+        "inst_hier_path": "gnd",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "0"
           }
         }
       },
@@ -601,91 +686,6 @@
             }
           }
         }
-      },
-      "blinky": {
-        "interface_ports": {
-          "SYSCLK2": {
-            "mode": "Slave",
-            "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
-            "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0"
-          }
-        },
-        "ports": {
-          "QSFP28_0_ACTIVITY_LED": {
-            "direction": "O"
-          }
-        },
-        "components": {
-          "clock_buffer": {
-            "vlnv": "xilinx.com:ip:util_ds_buf:2.2",
-            "xci_name": "top_level_util_ds_buf_1_0",
-            "xci_path": "ip/top_level_util_ds_buf_1_0/top_level_util_ds_buf_1_0.xci",
-            "inst_hier_path": "blinky/clock_buffer"
-          },
-          "blinky": {
-            "vlnv": "xilinx.com:module_ref:blinky:1.0",
-            "xci_name": "top_level_blinky_0_0",
-            "xci_path": "ip/top_level_blinky_0_0/top_level_blinky_0_0.xci",
-            "inst_hier_path": "blinky/blinky",
-            "reference_info": {
-              "ref_type": "hdl",
-              "ref_name": "blinky",
-              "boundary_crc": "0x0"
-            },
-            "ports": {
-              "clk": {
-                "type": "clk",
-                "direction": "I",
-                "parameters": {
-                  "FREQ_HZ": {
-                    "value": "100000000",
-                    "value_src": "ip_prop"
-                  },
-                  "CLK_DOMAIN": {
-                    "value": "top_level_util_ds_buf_1_0_IBUF_OUT",
-                    "value_src": "default_prop"
-                  }
-                }
-              },
-              "led": {
-                "direction": "O"
-              }
-            }
-          }
-        },
-        "interface_nets": {
-          "SYSCLK2_1": {
-            "interface_ports": [
-              "SYSCLK2",
-              "clock_buffer/CLK_IN_D"
-            ]
-          }
-        },
-        "nets": {
-          "blinky_led": {
-            "ports": [
-              "blinky/led",
-              "QSFP28_0_ACTIVITY_LED"
-            ]
-          },
-          "util_ds_buf_1_IBUF_OUT": {
-            "ports": [
-              "clock_buffer/IBUF_OUT",
-              "blinky/clk"
-            ]
-          }
-        }
-      },
-      "gnd": {
-        "vlnv": "xilinx.com:ip:xlconstant:1.1",
-        "xci_name": "top_level_xlconstant_0_0",
-        "xci_path": "ip/top_level_xlconstant_0_0/top_level_xlconstant_0_0.xci",
-        "inst_hier_path": "gnd",
-        "parameters": {
-          "CONST_VAL": {
-            "value": "0"
-          }
-        }
       }
     },
     "interface_nets": {
@@ -750,7 +750,7 @@
       "sys_rst_n_0_1": {
         "ports": [
           "PCIE_PERST_LS_65",
-          "pcie_bridge_0/PCIE_PERST_LS_65"
+          "pcie_bridge_0/PCIE_PERST"
         ]
       }
     },
