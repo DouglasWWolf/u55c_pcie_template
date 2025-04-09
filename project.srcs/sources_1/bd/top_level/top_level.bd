@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xE0548482E4DEB30",
+      "boundary_crc": "0x355BE9FA07A19E3A",
       "device": "xcu55c-fsvh2892-2L-e",
       "gen_directory": "../../../../project.gen/sources_1/bd/top_level",
       "name": "top_level",
@@ -11,20 +11,16 @@
       "validated": "true"
     },
     "design_tree": {
-      "pcie_bridge_0": {
-        "pcie_bridge_0": "",
+      "pcie_bridge": {
+        "pcie_bridge": "",
         "clock_buffer": ""
       },
       "smartconnect": "",
-      "blinky": {
-        "clock_buffer": "",
-        "blinky": ""
-      },
       "gnd": "",
       "axil_slave": ""
     },
     "interface_ports": {
-      "SYSCLK2": {
+      "pcie0_refclk": {
         "mode": "Slave",
         "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
         "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0",
@@ -39,37 +35,19 @@
           }
         }
       },
-      "PCIE_REFCLK0": {
-        "mode": "Slave",
-        "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
-        "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0",
-        "parameters": {
-          "CAN_DEBUG": {
-            "value": "false",
-            "value_src": "default"
-          },
-          "FREQ_HZ": {
-            "value": "100000000",
-            "value_src": "default"
-          }
-        }
-      },
-      "pcie_mgt_0": {
+      "pcie_mgt": {
         "mode": "Master",
         "vlnv_bus_definition": "xilinx.com:interface:pcie_7x_mgt:1.0",
         "vlnv": "xilinx.com:interface:pcie_7x_mgt_rtl:1.0"
       }
     },
     "ports": {
-      "QSFP28_0_ACTIVITY_LED": {
-        "direction": "O"
-      },
-      "HBM_CATTRIP_LS": {
+      "hbm_cattrip": {
         "direction": "O",
         "left": "0",
         "right": "0"
       },
-      "PCIE_PERST_LS_65": {
+      "pcie_perst_l": {
         "type": "rst",
         "direction": "I",
         "parameters": {
@@ -85,14 +63,14 @@
       }
     },
     "components": {
-      "pcie_bridge_0": {
+      "pcie_bridge": {
         "interface_ports": {
           "pcie_mgt_0": {
             "mode": "Master",
             "vlnv_bus_definition": "xilinx.com:interface:pcie_7x_mgt:1.0",
             "vlnv": "xilinx.com:interface:pcie_7x_mgt_rtl:1.0"
           },
-          "PCIE_REFCLK": {
+          "pcie_refclk": {
             "mode": "Slave",
             "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
             "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0"
@@ -104,7 +82,7 @@
           }
         },
         "ports": {
-          "PCIE_PERST": {
+          "pcie_perst": {
             "type": "rst",
             "direction": "I"
           },
@@ -116,11 +94,11 @@
           }
         },
         "components": {
-          "pcie_bridge_0": {
+          "pcie_bridge": {
             "vlnv": "xilinx.com:ip:xdma:4.1",
             "xci_name": "top_level_xdma_0_0",
             "xci_path": "ip/top_level_xdma_0_0/top_level_xdma_0_0.xci",
-            "inst_hier_path": "pcie_bridge_0/pcie_bridge_0",
+            "inst_hier_path": "pcie_bridge/pcie_bridge",
             "parameters": {
               "PF0_DEVICE_ID_mqdma": {
                 "value": "9048"
@@ -159,7 +137,7 @@
                 "value": "Advanced"
               },
               "pcie_blk_locn": {
-                "value": "PCIE4C_X1Y0"
+                "value": "PCIE4C_X1Y1"
               },
               "pf0_bar0_scale": {
                 "value": "Megabytes"
@@ -168,7 +146,7 @@
                 "value": "1"
               },
               "pf0_device_id": {
-                "value": "903F"
+                "value": "9048"
               },
               "pf0_msi_enabled": {
                 "value": "false"
@@ -229,7 +207,7 @@
             "vlnv": "xilinx.com:ip:util_ds_buf:2.2",
             "xci_name": "top_level_util_ds_buf_0_0",
             "xci_path": "ip/top_level_util_ds_buf_0_0/top_level_util_ds_buf_0_0.xci",
-            "inst_hier_path": "pcie_bridge_0/clock_buffer",
+            "inst_hier_path": "pcie_bridge/clock_buffer",
             "parameters": {
               "C_BUF_TYPE": {
                 "value": "IBUFDSGTE"
@@ -240,51 +218,51 @@
         "interface_nets": {
           "CLK_IN_D_0_1": {
             "interface_ports": [
-              "PCIE_REFCLK",
+              "pcie_refclk",
               "clock_buffer/CLK_IN_D"
             ]
           },
           "xdma_0_M_AXI_B": {
             "interface_ports": [
               "M_AXI_B",
-              "pcie_bridge_0/M_AXI_B"
+              "pcie_bridge/M_AXI_B"
             ]
           },
           "xdma_0_pcie_mgt": {
             "interface_ports": [
               "pcie_mgt_0",
-              "pcie_bridge_0/pcie_mgt"
+              "pcie_bridge/pcie_mgt"
             ]
           }
         },
         "nets": {
           "sys_rst_n_0_1": {
             "ports": [
-              "PCIE_PERST",
-              "pcie_bridge_0/sys_rst_n"
+              "pcie_perst",
+              "pcie_bridge/sys_rst_n"
             ]
           },
           "util_ds_buf_0_IBUF_DS_ODIV2": {
             "ports": [
               "clock_buffer/IBUF_DS_ODIV2",
-              "pcie_bridge_0/sys_clk"
+              "pcie_bridge/sys_clk"
             ]
           },
           "util_ds_buf_0_IBUF_OUT": {
             "ports": [
               "clock_buffer/IBUF_OUT",
-              "pcie_bridge_0/sys_clk_gt"
+              "pcie_bridge/sys_clk_gt"
             ]
           },
           "xdma_0_axi_aclk": {
             "ports": [
-              "pcie_bridge_0/axi_aclk",
+              "pcie_bridge/axi_aclk",
               "axi_aclk"
             ]
           },
           "xdma_0_axi_aresetn": {
             "ports": [
-              "pcie_bridge_0/axi_aresetn",
+              "pcie_bridge/axi_aresetn",
               "axi_aresetn"
             ]
           }
@@ -341,80 +319,6 @@
                 "value": "0"
               }
             }
-          }
-        }
-      },
-      "blinky": {
-        "interface_ports": {
-          "SYSCLK2": {
-            "mode": "Slave",
-            "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
-            "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0"
-          }
-        },
-        "ports": {
-          "QSFP28_0_ACTIVITY_LED": {
-            "direction": "O"
-          }
-        },
-        "components": {
-          "clock_buffer": {
-            "vlnv": "xilinx.com:ip:util_ds_buf:2.2",
-            "xci_name": "top_level_util_ds_buf_1_0",
-            "xci_path": "ip/top_level_util_ds_buf_1_0/top_level_util_ds_buf_1_0.xci",
-            "inst_hier_path": "blinky/clock_buffer"
-          },
-          "blinky": {
-            "vlnv": "xilinx.com:module_ref:blinky:1.0",
-            "xci_name": "top_level_blinky_0_0",
-            "xci_path": "ip/top_level_blinky_0_0/top_level_blinky_0_0.xci",
-            "inst_hier_path": "blinky/blinky",
-            "reference_info": {
-              "ref_type": "hdl",
-              "ref_name": "blinky",
-              "boundary_crc": "0x0"
-            },
-            "ports": {
-              "clk": {
-                "type": "clk",
-                "direction": "I",
-                "parameters": {
-                  "FREQ_HZ": {
-                    "value": "100000000",
-                    "value_src": "ip_prop"
-                  },
-                  "CLK_DOMAIN": {
-                    "value": "top_level_util_ds_buf_1_0_IBUF_OUT",
-                    "value_src": "default_prop"
-                  }
-                }
-              },
-              "led": {
-                "direction": "O"
-              }
-            }
-          }
-        },
-        "interface_nets": {
-          "SYSCLK2_1": {
-            "interface_ports": [
-              "SYSCLK2",
-              "clock_buffer/CLK_IN_D"
-            ]
-          }
-        },
-        "nets": {
-          "blinky_led": {
-            "ports": [
-              "blinky/led",
-              "QSFP28_0_ACTIVITY_LED"
-            ]
-          },
-          "util_ds_buf_1_IBUF_OUT": {
-            "ports": [
-              "clock_buffer/IBUF_OUT",
-              "blinky/clk"
-            ]
           }
         }
       },
@@ -691,19 +595,13 @@
     "interface_nets": {
       "CLK_IN_D_0_1": {
         "interface_ports": [
-          "PCIE_REFCLK0",
-          "pcie_bridge_0/PCIE_REFCLK"
-        ]
-      },
-      "SYSCLK2_1": {
-        "interface_ports": [
-          "SYSCLK2",
-          "blinky/SYSCLK2"
+          "pcie0_refclk",
+          "pcie_bridge/pcie_refclk"
         ]
       },
       "pcie_bridge_0_M_AXI_B": {
         "interface_ports": [
-          "pcie_bridge_0/M_AXI_B",
+          "pcie_bridge/M_AXI_B",
           "smartconnect/S00_AXI"
         ]
       },
@@ -715,47 +613,41 @@
       },
       "xdma_0_pcie_mgt": {
         "interface_ports": [
-          "pcie_mgt_0",
-          "pcie_bridge_0/pcie_mgt_0"
+          "pcie_mgt",
+          "pcie_bridge/pcie_mgt_0"
         ]
       }
     },
     "nets": {
-      "blinky_led": {
-        "ports": [
-          "blinky/QSFP28_0_ACTIVITY_LED",
-          "QSFP28_0_ACTIVITY_LED"
-        ]
-      },
       "gnd_dout": {
         "ports": [
           "gnd/dout",
-          "HBM_CATTRIP_LS"
+          "hbm_cattrip"
         ]
       },
       "pcie_bridge_0_axi_aclk": {
         "ports": [
-          "pcie_bridge_0/axi_aclk",
+          "pcie_bridge/axi_aclk",
           "smartconnect/aclk",
           "axil_slave/clk"
         ]
       },
       "pcie_bridge_0_axi_aresetn": {
         "ports": [
-          "pcie_bridge_0/axi_aresetn",
+          "pcie_bridge/axi_aresetn",
           "smartconnect/aresetn",
           "axil_slave/resetn"
         ]
       },
       "sys_rst_n_0_1": {
         "ports": [
-          "PCIE_PERST_LS_65",
-          "pcie_bridge_0/PCIE_PERST"
+          "pcie_perst_l",
+          "pcie_bridge/pcie_perst"
         ]
       }
     },
     "addressing": {
-      "/pcie_bridge_0/pcie_bridge_0": {
+      "/pcie_bridge/pcie_bridge": {
         "address_spaces": {
           "M_AXI_B": {
             "segments": {
